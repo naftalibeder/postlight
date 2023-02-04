@@ -4,7 +4,7 @@ import cheerio from 'cheerio';
 
 import Mercury from 'mercury';
 import getExtractor from 'extractors/get-extractor';
-import { excerptContent } from 'utils/text';
+import { excerptContent, excerptContentRange } from 'utils/text';
 
 const fs = require('fs');
 
@@ -91,6 +91,39 @@ describe('WwwWashingtonpostComExtractor', () => {
       assert.equal(
         first13,
         'Pittsburgh Mayor Bill Peduto on Sunday near the Tree of Life synagogue in'
+      );
+    });
+  });
+
+  describe('Marie Kondo article', () => {
+    let result;
+    let url;
+    beforeAll(() => {
+      url =
+        'https://www.washingtonpost.com/news/opinions/wp/2018/10/29/enough-platitudes-lets-name-names/';
+      const html = fs.readFileSync(
+        './fixtures/www.washingtonpost.com--kondo.html'
+      );
+      result = Mercury.parse(url, { html, fallback: false });
+    });
+
+    it('returns the content', async () => {
+      // To pass this test, fill out the content selector
+      // in ./src/extractors/custom/www.washingtonpost.com/index.js.
+      // You may also want to make use of the clean and transform
+      // options.
+      const { content } = await result;
+
+      const $ = cheerio.load(content || '');
+      const text = $.text();
+
+      const slice1 = excerptContentRange(text, -17);
+
+      // Update these values with the expected values from
+      // the article.
+      assert.equal(
+        slice1,
+        'at least remember this: Someone is going to have go through all your stuff when you’re gone.'
       );
     });
   });

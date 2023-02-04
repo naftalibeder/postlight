@@ -22,7 +22,7 @@ export const WwwWashingtonpostComExtractor = {
   },
 
   content: {
-    selectors: ['.article-body'],
+    selectors: ['.article-body', 'article'],
 
     // Is there anything in the content you selected that needs transformed
     // before it's consumable content? E.g., unusual lazy loaded images
