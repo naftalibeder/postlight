@@ -55,10 +55,15 @@ describe('IdlewordsComExtractor', () => {
         .first()
         .text();
 
-      const slice1 = excerptContentRange(text, -46, -35);
-
+      const slice1 = excerptContentRange(text, 0, 12);
       assert.equal(
         slice1,
+        'In 1945, as American physicists were preparing to test the atomic'
+      );
+
+      const slice2 = excerptContentRange(text, -46, -35);
+      assert.equal(
+        slice2,
         'In the absence of effective leadership from those at the top'
       );
     });
